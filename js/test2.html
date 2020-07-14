@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var str = "ansdasojmopakdsaa3444343";
+        // 字符串长度
+
+        console.log(str.length);
+        // 取出指定位置字符
+
+        console.log(str.charAt(0));
+        // 查找是否存在指定字符
+        console.log(str.indexOf('n'));
+        // 替换指定字符
+        while (str.indexOf('a') != -1) {
+            str = str.replace('a', '22');
+        }
+        console.log(str);
+        // 截取指定位置开始到结束位置的字符串
+        console.log(str.substr(0, 5));
+        // 找到字符串中字符出现次数最多的字符及次数
+        var c = {};
+        for (var i = 0; i < str.length; i++) {
+            if (c[str[i]]) {
+                c[str[i]]++;
+            } else {
+                c[str[i]] = 1;
+            }
+        }
+        var tmp = 0;
+        var ch = '';
+        for (var k in c) {
+            if (tmp < c[k]) {
+                tmp = c[k];
+                ch = k;
+            }
+        }
+        console.log(ch + '出现次数最多，为：' + tmp);
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

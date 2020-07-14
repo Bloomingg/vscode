@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .demo1 {
+            position: relative;
+            width: 520px;
+            height: 280px;
+            margin: 100px auto;
+            background-color: pink;
+        }
+
+        .demo1 a {
+            position: absolute;
+            width: 20px;
+            height: 30px;
+            background: rgba(0, 0, 0, .3);
+            line-height: 30px;
+            color: #ffffff;
+            text-decoration: none;
+            top: 50%;
+            margin-top: -15px;
+        }
+
+        .demo1 .pre {
+            left: 0;
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        .demo1 .next {
+            right: 0;
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+        }
+
+        .nav {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            margin-left: -35px;
+            width: 70px;
+            height: 13px;
+            background: rgba(255, 255, 255, .3);
+            border-radius: 7px;
+        }
+
+        .nav li {
+            float: left;
+            width: 8px;
+            height: 8px;
+            background-color: #fff;
+            border-radius: 50%;
+            margin: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo1">
+        <img src="images/position.webp" alt="">
+        <a href="#" class="pre">&lt;</a>
+        <a href="#" class="next">&gt;</a>
+        <ul class="nav">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+</body>
+
+</html>
