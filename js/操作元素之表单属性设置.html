@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" value="请输入">
+    <button>点击</button>
+    <script>
+        // 获取元素
+        var input = document.querySelector('input');
+        var btn = document.querySelector('button')
+            // 注册事件
+        btn.onclick = function() {
+            // 处理程序
+            input.value = '被点击了';
+            // 按钮禁用
+            // btn.disabled = true;
+            this.disabled = true;
+        }
+    </script>
+</body>
+
+</html>

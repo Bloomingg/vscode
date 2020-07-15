@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 400px;
+            height: 300px;
+            background-color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+
+    </div>
+    <span class="test">
+        x
+    </span>
+    <script>
+        // 获取元素
+        var div = document.querySelector('div');
+        // 注册事件 处理程序
+        var sp = document.querySelector('.test');
+        sp.onclick = function() {
+            sp.innerHTML = 'test'
+        }
+        div.onclick = function() {
+            //样式名称为驼峰命名法
+            div.style.backgroundColor = 'blue';
+            this.style.width = '600px'
+        }
+    </script>
+</body>
+
+</html>

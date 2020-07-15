@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 400px;
+            height: 50px;
+            margin: 100px auto;
+            box-sizing: border-box;
+            border: 4px solid #ccc;
+        }
+        
+        .box input {
+            float: left;
+            width: 330px;
+            height: 42px;
+            border: none;
+            outline: none;
+            color: #999999;
+        }
+        
+        .box button {
+            float: left;
+            width: 62px;
+            height: 42px;
+            background-color: pink;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <input type="search" name="" id="" value="手机">
+        <button>搜索</button>
+    </div>
+    <script>
+        var text = document.querySelector('input');
+        text.onfocus = function() {
+            if (text.value === '手机') {
+                text.value = '';
+            }
+            text.style.color = '#333'
+        }
+        text.onblur = function() {
+            if (text.value === '') {
+                text.value = '手机';
+            }
+            text.style.color = '#999';
+        }
+    </script>
+</body>
+
+</html>
