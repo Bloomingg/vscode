@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .box {
+            width: 1200px;
+            background-color: #ccc;
+            margin: 100px auto;
+        }
+        
+        .shead {
+            height: 40px;
+            border-bottom: 3px solid #999;
+        }
+        
+        .shead ul {
+            list-style: none;
+        }
+        
+        .shead ul li {
+            float: left;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            padding: 0 20px;
+            cursor: pointer;
+            list-style-type: none;
+        }
+        
+        .shead .current {
+            background-color: red;
+            color: #ffffff;
+        }
+        
+        .item {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="shead">
+            <ul>
+                <li class="current">商品介绍</li>
+                <li>规格与包装</li>
+                <li>售后保障</li>
+                <li>商品评价</li>
+                <li>手机社区</li>
+            </ul>
+        </div>
+        <div class="cont">
+            <div class="item" style="display: block;">商品介绍</div>
+            <div class="item">规格与包装</div>
+            <div class="item">售后保障</div>
+            <div class="item">商品评价</div>
+            <div class="item">手机社区</div>
+        </div>
+    </div>
+    <script>
+        var lis = document.querySelector('.shead').querySelectorAll('li');
+        var items = document.querySelectorAll('.item');
+        for (var i = 0; i < lis.length; i++) {
+            // 给li设置索引号
+            // H5规定自定义属性以data-开头
+            lis[i].setAttribute('data-index', i);
+
+            lis[i].onclick = function() {
+                for (var i = 0; i < lis.length; i++) {
+                    lis[i].className = '';
+                }
+                this.className = 'current';
+                var index = this.getAttribute('data-index');
+                console.log(index);
+                for (var i = 0; i < lis.length; i++) {
+                    items[i].style.display = 'none';
+                }
+                items[index].style.display = 'block';
+            }
+        }
+    </script>
+</body>
+
+</html>

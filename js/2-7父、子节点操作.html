@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="box">
+        <div class="demo">
+            <div class="test">
+                <ul>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 父节点操作只取最近一个父节点
+        var demo = document.querySelector('.demo');
+        console.log(demo.parentNode);
+
+        // 子节点操作
+        var ul = document.querySelector('ul');
+        // childrenNodes可以取到所有节点 文本节点3  属性节点2 及元素节点1
+        console.log(ul.childNodes);
+        // 文本节点 nodeType为3
+        console.log(ul.childNodes[0].nodeType);
+        // 元素节点 nodeType为1
+        console.log(ul.childNodes[1].nodeType);
+        // children仅选出元素节点
+        console.log(ul.children);
+
+        // 取多个子节点中其中一个
+        // 1.firstChild 取回第一个节点  不论是元素节点 还是 文本节点
+        console.log(ul.firstChild);
+        console.log(ul.lastChild);
+
+        // 2.firstElmentChild 取回第一个元素节点  但存在兼容性问题 ie9+
+        console.log(ul.firstElementChild);
+        console.log(ul.lastElementChild);
+
+        // 3.实际开发中利用children操作取出指定元素节点
+        console.log(ul.children[0]);
+        console.log(ul.children[ul.children.length - 1]);
+    </script>
+</body>
+
+</html>

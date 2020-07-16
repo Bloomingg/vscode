@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .demo {
+            width: 1200px;
+            height: 800px;
+            margin: 100px auto;
+        }
+        
+        .demo ul {
+            margin-top: 20px;
+        }
+        
+        .demo ul li {
+            list-style-type: none;
+            background-color: #ccc;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo">
+        <textarea name="" id="" cols="30" rows="10"></textarea>
+        <button>提交</button>
+        <ul>
+
+        </ul>
+    </div>
+    <script>
+        var btn = document.querySelector('button');
+        var text = document.querySelector('textarea');
+        var ul = document.querySelector('.demo').querySelector('ul');
+        btn.onclick = function() {
+            if (text.value === '') {
+                alert('您还没有输入内容！')
+            } else {
+                var li = document.createElement('li');
+                li.innerHTML = text.value;
+                // ul.appendChild(li);
+                ul.insertBefore(li, ul.children[0]);
+            }
+        }
+    </script>
+</body>
+
+</html>
