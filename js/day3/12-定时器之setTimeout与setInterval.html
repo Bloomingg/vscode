@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>停止定时器</button>
+    <script>
+        // document.setTimeout document可以省略 延时单位为毫秒 可以省略 即为0
+        // setTimeout(function(){
+        //     alert('时间到了');
+        // },3000)
+
+        // 可通过函数名调用
+        function callback() {
+            alert('时间到了');
+        }
+        // 页面中可能存在多个定时器 可为定时器加标识符
+        // var timer1 = setTimeout(callback, 3000);
+        // var timer2 = setTimeout(callback, 5000);
+        // var btn = document.querySelector('button');
+        // btn.addEventListener('click', function() {
+        //     clearTimeout(timer1);
+        // })
+
+        // setInterval 定时器 每过指定时间就调用一次
+        var timer3 = setInterval(callback, 3000);
+    </script>
+</body>
+
+</html>

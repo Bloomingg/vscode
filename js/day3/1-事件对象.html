@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 400px;
+            height: 400px;
+            margin: 100px auto;
+            background-color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <script>
+        var div = document.querySelector('div');
+        div.onclick = function(e) {
+            // console.log(e);
+            // // ie8及之前存在兼容性问题
+            // console.log(window.event);
+
+            // 兼容性写法
+            // e = e || window.event;
+            console.log(e);
+        }
+
+        // div.addEventListener('click',function(e) {
+        //     console.log(e);
+        // })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 执行顺序 keydown->keypress->keyup
+        // keyup keydown 中的keyCode属性取得的相应键的ASCII码值 不区分大小写
+        document.addEventListener('keyup', function(e) {
+            console.log('我弹起了');
+            console.log('UP' + e.keyCode);
+        })
+
+        document.addEventListener('keydown', function(e) {
+                console.log('我按下了down');
+            })
+            // keypress 不支持功能按键 如ctrl shift 左右箭头等
+            // keypress 中keyCode属性取得的相应键的ASCII码值 区分大小写
+        document.addEventListener('keypress', function(e) {
+            console.log('我按下了press');
+            console.log('PRESS' + e.keyCode);
+        })
+    </script>
+</body>
+
+</html>

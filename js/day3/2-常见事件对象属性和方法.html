@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <a href="#">Test</a>
+        <span>Test2</span>
+    </div>
+    <ul>
+        <li>123</li>
+        <li>456</li>
+    </ul>
+    <script>
+        var div = document.querySelector('div');
+        div.addEventListener('click', function(e) {
+            // e.target 点击了哪个元素 就返回哪个元素
+            console.log(e.target);
+            // this 哪个元素绑定了这个事件 那么就返回谁
+            console.log(this);
+        })
+        var ul = document.querySelector('ul');
+        ul.addEventListener('click', function(e) {
+            // e.target 点击了哪个元素 就返回哪个元素
+            console.log(e.target);
+            // this 哪个元素绑定了这个事件 那么就返回谁
+            console.log(this);
+        })
+
+        // 返回事件类型
+        var span = document.querySelector('span');
+
+        span.addEventListener('click', fn);
+        span.addEventListener('mouseover', fn);
+        span.addEventListener('mouseout', fn);
+
+        function fn(e) {
+            console.log(e.type);
+        }
+
+        // 阻止默认行为（事件）
+        var a = document.querySelector('a');
+        // a.addEventListener('click',function(e){
+        //     // dom标准写法
+        //     e.preventDefault();
+        // })
+        // 传统注册方式
+        a.onclick = function(e) {
+            // 普通浏览器
+            // e.preventDefault();
+            // 低版本浏览器 ie678
+            // e.returnValue();
+            //return false 通用  但 return false之后的内容无法继续执行
+            return false;
+        }
+    </script>
+</body>
+
+</html>
