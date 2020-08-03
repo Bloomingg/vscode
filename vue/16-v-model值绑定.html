@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <label for="lanqiu"><input type="checkbox" id="lanqiu" value="篮球" v-model="hobbies">篮球</label>
+        <label for="zuqiu"><input type="checkbox" id="zuqiu" value="足球" v-model="hobbies">足球</label>
+        <label for="paiqiu"><input type="checkbox" id="paiqiu" value="排球" v-model="hobbies">排球</label>
+        <label for="liuliuqiu"><input type="checkbox" id="liuliuqiu" value="溜溜球" v-model="hobbies">溜溜球</label> -->
+        <label v-for="item in originHobbies" :for="item">
+            <input type="checkbox" :id="item" :value="item" v-model="hobbies">{{item}}
+        </label>
+        <h3>您当前选择的爱好为：{{hobbies}}</h3>
+        <label for="argee">
+            <input type="checkbox" id="argee" v-model="isAgree">我同意以上协议
+        </label>
+        <button :disabled="!isAgree">下一步</button>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                isAgree: false,
+                hobbies: [],
+                originHobbies: ['篮球', '足球', '排球', '溜溜球']
+            }
+        })
+    </script>
+</body>
+
+</html>

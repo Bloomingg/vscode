@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div @click="divClick">aaa
+            <!-- .stop修饰符 阻止事件冒泡 调用 event.stopPropagation -->
+            <button @click.stop="btn1Click">按钮1</button>
+
+            <form action="">
+                <!-- .prevent修饰符 阻止默认事件 调用 event.prevenDefault() -->
+                <input type="submit" value="提交" @click="submitClick">
+            </form>
+            <!-- 监听某个按键 .{keyCode|keyAlias} -->
+            <input type="text" name="" id="" @keyup.enter="keyUp">
+
+        </div>
+        <!-- 只触发一次 -->
+        <button @click.once="btn2Click">按钮2</button>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            methods: {
+                // 无参调用
+                btn1Click() {
+                    console.log('btn1Click');
+                },
+                divClick() {
+                    console.log('divClick');
+                },
+                submitClick() {
+                    console.log('submitClick');
+                },
+                keyUp() {
+                    console.log('keyUp');
+                },
+                btn2Click() {
+                    console.log('btn2Click');
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

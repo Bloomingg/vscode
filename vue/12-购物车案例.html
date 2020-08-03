@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        thead {
+            background-color: #f7f7f7;
+            color: #5c6b77;
+            font-weight: 600;
+        }
+        
+        table {
+            margin: 100px auto;
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        
+        th,
+        td {
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="box1">
+            <table>
+                <thead>
+                    <th></th>
+                    <th>书籍名称</th>
+                    <th>出版日期</th>
+                    <th>价格</th>
+                    <th>购买数量</th>
+                    <th>操作</th>
+                </thead>
+                <tbody>
+                    <tr v-for="(item,index) in  books">
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.date}}</td>
+                        <td>{{item.price |showPrice}}</td>
+                        <td><button @click="decrement(index)" :disabled="item.count <=1">-</button> {{item.count}}
+                            <button @click="increment(index)">+</button>
+                        </td>
+                        <td><button @click='remove(index)'>移除</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>总价格：{{sumPrice|showPrice}}</h2>
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                books: [{
+                    id: 1,
+                    name: '《算法导论》',
+                    date: '2006-9',
+                    price: 85.00,
+                    count: 1
+                }, {
+                    id: 2,
+                    name: '《算法导论2》',
+                    date: '2006-9',
+                    price: 95.00,
+                    count: 1
+                }, {
+                    id: 3,
+                    name: '《算法导论3》',
+                    date: '2006-9',
+                    price: 77.00,
+                    count: 1
+                }, {
+                    id: 4,
+                    name: '《算法导论4》',
+                    date: '2006-9',
+                    price: 99.00,
+                    count: 1
+                }, ]
+            },
+            methods: {
+                decrement(index) {
+                    // console.log(index);
+                    this.books[index].count--
+                },
+                increment(index) {
+                    this.books[index].count++
+                },
+                remove(index) {
+                    this.books.splice(index, 1)
+                }
+            },
+            // 定义过滤器
+            filters: {
+                showPrice(price) {
+                    return '¥' + price.toFixed(2)
+                }
+            },
+            computed: {
+                sumPrice() {
+                    // let sum = 0;
+                    // for (let i in this.books) {
+                    //     sum += this.books[i].price * this.books[i].count
+                    // }
+                    // return sum
+
+                    // for (let item of this.books) {
+                    //     sum += item.price * item.count
+                    // }
+                    // return sum
+
+                    return this.books.reduce((preValue, book) => preValue + book.price * book.count, 0)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

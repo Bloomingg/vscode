@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="btn1Click">按钮1</button>
+        <button @click="btn1Click()">按钮1</button>
+        <!-- 返回event -->
+        <button @click="btn2Click">按钮2</button>
+        <!-- 返回undefined -->
+        <button @click="btn2Click()">按钮2</button>
+        <!-- 既传入参数 又打印event -->
+        <button @click="btn3Click('def',$event)">按钮3</button>
+
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            methods: {
+                // 无参调用
+                btn1Click() {
+                    console.log('btn1Click');
+                },
+                // 有参数 但未传入时  @click="btn2Click" 会返回事件对象 event
+                btn2Click(event) {
+                    console.log('---------', event);
+                },
+                // 既传入参数 又打印event
+                btn3Click(abc, event) {
+                    console.log(abc, event);
+                },
+            }
+        })
+    </script>
+</body>
+
+</html>

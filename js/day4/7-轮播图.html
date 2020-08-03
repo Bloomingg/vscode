@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        .box {
+            position: relative;
+            width: 721px;
+            height: 455px;
+            background-color: #ccc;
+            margin: 100px auto;
+            overflow: hidden;
+        }
+        
+        .lt {
+            position: absolute;
+            z-index: 1;
+            left: 0;
+            top: 202px;
+            display: none;
+            width: 30px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            background: rgba(0, 0, 0, .3);
+        }
+        
+        .rt {
+            position: absolute;
+            z-index: 1;
+            right: 0;
+            top: 202px;
+            display: none;
+            width: 30px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            background: rgba(0, 0, 0, .3);
+        }
+        
+        ol {
+            position: absolute;
+            left: 40px;
+            bottom: 30px;
+            height: 20px;
+        }
+        
+        ol li {
+            float: left;
+            margin: 0 5px;
+            list-style-type: none;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: transparent;
+            border: 2px solid #fff;
+        }
+        
+        ul {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 500%;
+        }
+        
+        ul li {
+            float: left;
+            list-style-type: none;
+        }
+        
+        .current {
+            background-color: #fff;
+        }
+    </style>
+    <script src="animate.js"></script>
+</head>
+
+<body>
+    <div class="box">
+        <a href="javascript:;" class="lt">&lt;</a>
+        <a href="javascript:;" class="rt">&gt;</a>
+        <ul>
+            <li><img src="images/focus.jpg" alt=""></li>
+            <li><img src="images/focus1.jpg" alt=""></li>
+            <li><img src="images/focus2.jpg" alt=""></li>
+            <li><img src="images/focus3.jpg" alt=""></li>
+        </ul>
+
+        <ol>
+
+        </ol>
+    </div>
+    <script>
+        var lt = document.querySelector('.lt');
+        var rt = document.querySelector('.rt');
+        var box = document.querySelector('.box');
+
+        box.addEventListener('mouseenter', function() {
+            lt.style.display = 'block';
+            rt.style.display = 'block';
+            clearInterval(timer);
+            timer = null;
+        })
+        box.addEventListener('mouseleave', function() {
+                lt.style.display = 'none';
+                rt.style.display = 'none';
+                timer = setInterval(function() {
+                    rt.click();
+                }, 2000)
+            })
+            // 动态生成ol
+        var ul = box.querySelector('ul');
+        var ol = box.querySelector('ol');
+        var boxWidth = box.offsetWidth;
+        for (var i = 0; i < ul.children.length; i++) {
+            var li = document.createElement('li');
+            // 自定义属于 为li添加索引号
+            li.setAttribute('data-index', i);
+            ol.appendChild(li);
+            // 排他思想
+            li.addEventListener('click', function() {
+                for (var i = 0; i < ol.children.length; i++) {
+                    ol.children[i].className = '';
+                }
+                this.className = 'current';
+                // 点击小圆圈 移动到指定图片
+                var index = this.getAttribute('data-index');
+                // 当点击了某一个li 将索引号给num
+                num = index;
+                circle = index;
+                animate(ul, -index * boxWidth);
+            })
+        }
+        ol.children[0].className = 'current';
+
+        // 克隆第一张图片至最后
+        var last = ul.children[0].cloneNode(true);
+        ul.appendChild(last);
+
+        // 右侧按钮实现
+        var num = 0;
+        var circle = 0;
+        // 节流阀
+        var flag = true;
+        rt.addEventListener('click', function() {
+            if (flag) {
+                // 关闭阀门
+                flag = false;
+                if (num == ul.children.length - 1) {
+                    ul.style.left = 0;
+                    num = 0;
+                }
+                num++;
+                // 通过回调函数开启阀门
+                animate(ul, -num * boxWidth, callBack);
+
+                // 小圆圈跟随变化
+                circle++;
+                /* if (circle == ol.children.length) {
+                    circle = 0;
+                } */
+                circle = circle == ol.children.length ? 0 : circle;
+                clearCircle();
+            }
+        })
+
+        // 左侧按钮实现
+        lt.addEventListener('click', function() {
+            if (flag) {
+                flag = false;
+                if (num == 0) {
+                    num = ul.children.length - 1;
+                    ul.style.left = -num * boxWidth;
+
+                }
+                num--;
+                animate(ul, -num * boxWidth, callBack);
+
+                // 小圆圈跟随变化
+                circle--;
+                /*  if (circle < 0) {
+                     circle = ol.children.length - 1;
+                 } */
+                circle = circle < 0 ? ol.children.length - 1 : circle;
+                clearCircle();
+            }
+        })
+
+
+        function callBack() {
+            flag = true;
+        }
+
+        function clearCircle() {
+            for (var i = 0; i < ol.children.length; i++) {
+                ol.children[i].className = '';
+            }
+            ol.children[circle].className = 'current';
+        }
+
+        // 自动播放
+        var timer = setInterval(function() {
+            rt.click();
+        }, 2000)
+    </script>
+</body>
+
+</html>

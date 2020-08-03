@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <!-- 默认取出value -->
+            <li v-for="item in info">{{item}}</li>
+        </ul>
+        <ul>
+            <!-- 同时取出key和value -->
+            <li v-for="(value,key) in info">{{key}}-{{value}}</li>
+        </ul>
+        <ul>
+            <!-- 同时取出key和value和索引值 -->
+            <li v-for="(value,key,index) in info">{{index}}-{{key}}-{{value}}</li>
+        </ul>
+        <ul>
+            <!-- 使用过程中添加 ：key key值与每一个item一一对应  若需要进行插入等操作时 提高效率
+            -->
+            <li v-for="item in info" :key="item">{{item}}</li>
+        </ul>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                info: {
+                    name: 'nbui',
+                    age: 18,
+                    sex: 'man'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

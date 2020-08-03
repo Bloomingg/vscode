@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .box1 {
+            /* position: relative; */
+            overflow: hidden;
+            width: 400px;
+            height: 400px;
+            background-color: pink;
+            margin: 100px 150px;
+        }
+        
+        .box2 {
+            width: 40px;
+            height: 40px;
+            margin: 40px 40px;
+            background-color: purple;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box1">
+        <div class="box2"></div>
+    </div>
+    <script>
+        var box1 = document.querySelector('.box1');
+        var box2 = document.querySelector('.box2');
+        console.log(box1.offsetTop);
+        console.log(box1.offsetLeft);
+        // 以带有定位的父元素为准  若没有父亲 或父亲没有定位  则以body为准
+        console.log(box2.offsetTop);
+        // 返回元素的宽度和高度
+        console.log(box2.offsetWidth);
+        console.log(box2.offsetHeight);
+        // 返回离元素最近一级的有定位的父元素
+        console.log(box2.offsetParent);
+        // 返回离元素最近一级的父元素  不论父元素有没有定位
+        console.log(box2.parentNode);
+    </script>
+</body>
+
+</html>

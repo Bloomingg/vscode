@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .clk {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <li :class="{clk:isActive === index}" @click="liclk(index)" v-for="(item,index) in movies">{{item}}</li>
+        </ul>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                movies: ['m1', 'm2', 'm3', 'm4'],
+                isActive: 0
+            },
+            methods: {
+                liclk: function(index) {
+                    this.isActive = index
+                }
+            }
+
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h2>{{firstName+ ' ' +lastName}}</h2>
+        <h2>{{firstName}} {{lastName}}</h2>
+        <h2>{{fullName}}</h2>
+
+        <h2>总价格为：{{sumpPice}}</h2>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                firstName: 'Blom',
+                lastName: 'Lsa',
+                books: [{
+                    id: 1,
+                    name: 'test1',
+                    price: 122
+                }, {
+                    id: 2,
+                    name: 'test2',
+                    price: 142
+                }, {
+                    id: 3,
+                    name: 'test3',
+                    price: 1522
+                }, {
+                    id: 4,
+                    name: 'test4',
+                    price: 125
+                }, ]
+            },
+            // computed计算属性
+            computed: {
+                fullName() {
+                    return this.firstName + ' ' + this.lastName
+                },
+                sumpPice() {
+                    let sum = 0
+                    for (let i in this.books) {
+                        sum += this.books[i].price
+                    }
+                    return sum
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

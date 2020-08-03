@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 100px;
+            height: 150px;
+            background-color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+
+    </div>
+    <script>
+        var div = document.querySelector('div');
+        div.addEventListener('touchstart', function(e) {
+            // console.log('我摸了你');
+            console.log(e);
+            // touches 正在触摸屏幕的所有手指列表
+            // targetTouches 正在触摸当前DOM元素的手指列表  常用
+            // changedTouches 手指状态发生了改变的列表 从无到有 或 从有到无
+        })
+        div.addEventListener('touchmove', function() {
+            // console.log('我还在摸你');
+        })
+        div.addEventListener('touchend', function() {
+            // console.log('我摸完了');
+        })
+    </script>
+</body>
+
+</html>

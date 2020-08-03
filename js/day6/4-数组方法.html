@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var arr = [42, 2, 43, 28];
+        /* var sum = 0;
+        arr.forEach(function(value, index, array) {
+            console.log('每个数组元素' + value);
+            console.log('每个数组元素的索引号' + index);
+            console.log('当前数组' + array);
+            sum += value;
+        })
+        console.log(sum); */
+        // filter 查找满足条件的元素，返回的是一个数组 而且是吧所有满足条件的元素返回回来
+        var arr1 = arr.filter(function(value, index, array) {
+            // return value >= 20;
+            return value % 2 == 0;
+        })
+        console.log(arr1);
+        // some 也是查找满足条件的元素，返回的是一个布尔值 如果查到第一个满足条件的元素就终止循环
+        var flag = arr.some(function(value, index, array) {
+            return value > 20;
+        })
+        console.log(flag);
+    </script>
+</body>
+
+</html>
