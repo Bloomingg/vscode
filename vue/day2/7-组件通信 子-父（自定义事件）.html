@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 父组件模板 -->
+    <div id="app">
+        <!-- 监听子组件$emit发出的事件 -->
+        <cpn @itemclick="liclick"></cpn>
+    </div>
+
+    <!-- 子组件模板 -->
+    <template id="cpn">
+        <div>
+            <ul>
+                <li v-for="item in categorise" @Click="liClick(item)">{{item.name}}</li>
+            </ul>
+        </div>
+    </template>
+    <script src="js/vue.js"></script>
+    <script>
+        // 子组件
+        const cpn = {
+                template: '#cpn',
+                data() {
+                    return {
+                        categorise: [{
+                            id: 1,
+                            name: '热门推荐'
+                        }, {
+                            id: 2,
+                            name: '手机数码'
+                        }, {
+                            id: 3,
+                            name: '家用家电'
+                        }, {
+                            id: 4,
+                            name: '电脑办公'
+                        }, ]
+                    }
+                },
+                methods: {
+                    liClick(item) {
+                        // console.log(item);
+                        // 发射事件 自定义事件
+                        this.$emit('itemclick', item)
+                    }
+                }
+            }
+            // 父组件（root组件）
+        const app = new Vue({
+            el: '#app',
+            methods: {
+                liclick(item) {
+                    console.log(item.name);
+                }
+            },
+            components: {
+                cpn
+            },
+        })
+    </script>
+</body>
+
+</html>

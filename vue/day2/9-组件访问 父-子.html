@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <cpn></cpn class="test">
+        <cpn ref="test"></cpn>
+        <cpn></cpn>
+        <button @click="btnClick">安利</button>
+    </div>
+
+    <template id="cpn">
+        <div>
+            <h2>我是子组件</h2>
+        </div>
+    </template>
+    <script src="js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            methods: {
+                // $chlidren方法访问子组件
+                // btnClick() {
+                //     console.log(this.$children);
+                //     // console.log(this.$children[0].name);
+                //     // this.$children[0].showmessage()
+                //     for (let i of this.$children) {
+                //         console.log(i.name);
+                //         i.showmessage()
+                //     }
+                // }
+
+                // $refs方法访问 $refs为对象类型 默认为空对象 可通过.xxx 对添加了ref属性的对象进行访问
+                btnClick() {
+                    console.log(this.$refs.test);
+                }
+            },
+            components: {
+                cpn: {
+                    template: '#cpn',
+                    data() {
+                        return {
+                            name: '我是子组件的name',
+                        }
+                    },
+                    methods: {
+                        showmessage() {
+                            console.log('showmessage');
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

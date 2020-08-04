@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 此处返回的三个对象中的数据都是单独的 互不影响 -->
+        <cpn></cpn>
+        <cpn></cpn>
+        <cpn></cpn>
+    </div>
+    <template id="cpn">
+        <div>
+            <h2>当前计数为：{{count}}</h2>
+            <button @click="decrement">-</button>
+            <button @click="increment">+</button>
+        </div>
+    </template>
+    <script src="js/vue.js"></script>
+    <script>
+        // 若以该种方式书写 则其中一个组件的数据进行改变 所有组件都会受到影响
+        // const obj = {
+        //         count: 0
+        //     }
+
+        // 注册组件
+        Vue.component('cpn', {
+            template: '#cpn',
+            // data用于保存组件中需要用到的数据 切格式必须为函数形式 返回一个对象
+            // 若data不以该方式存放，则组件中的数据都是统一使用一个地址
+            data() {
+                return {
+                    count: 0
+                }
+            },
+
+            // 若以该种方式书写 则其中一个组件的数据进行改变 所有组件都会受到影响
+            // data() {
+            //     return obj
+            // },
+
+            // 在组件中方法的书写
+            methods: {
+                increment() {
+                    this.count++
+                },
+                decrement() {
+                    this.count--
+                }
+            }
+        })
+        const app = new Vue({
+            el: '#app',
+        })
+    </script>
+</body>
+
+</html>
