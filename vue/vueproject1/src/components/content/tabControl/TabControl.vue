@@ -39,13 +39,13 @@ export default {
 <style>
 .tab-control {
   display: flex;
-  position: sticky;
-  top: 44px;
+  /* position: sticky; */
+  /* top: 44px; */
   height: 40px;
   line-height: 40px;
   text-align: center;
   background-color: #fff;
-  z-index: 9;
+  /* z-index: 9; */
 }
 .tab-control-item {
   flex: 1;

@@ -13,6 +13,7 @@ Vue.use(Swipe);
 Vue.use(SwipeItem);
 Vue.use(Lazyload);
 Vue.config.productionTip = false
+Vue.prototype.$bus = new Vue()
 
 new Vue({
     router,
