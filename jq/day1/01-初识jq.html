@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    div {
+      box-sizing: border-box;
+    }
+
+    .box1 {
+      background-color: #eee;
+      width: 420px;
+      height: 300px;
+      margin: 100px auto;
+    }
+
+    .nav>li {
+      width: 105px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      list-style: none;
+      float: left;
+      background-color: pink;
+    }
+
+    .con>li {
+      list-style: none;
+      display: none;
+    }
+
+    .box1 .nav .current {
+      background-color: saddlebrown;
+    }
+
+    .box1 .show {
+      display: block;
+    }
+
+    .box2 {
+      display: block;
+      width: 200px;
+      height: 200px;
+      background-color: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <button>显示</button>
+  <button>隐藏</button>
+  <button>切换</button>
+  <div class="box1">
+    <ul class="nav">
+      <li class="current">Browser Side</li>
+      <li>Server Side</li>
+      <li>Programming</li>
+      <li>Reference</li>
+    </ul>
+    <ul class="con">
+      <li class="show">Browser</li>
+      <li>Server</li>
+      <li>Programming</li>
+      <li>Reference</li>
+    </ul>
+  </div>
+  <div class="box2">
+
+  </div>
+  <script src="./js/jquery.js"></script>
+  <script>
+    $(function () {
+      $(".nav>li").on('mouseenter', function () {
+        $(this).addClass("current");
+        $(this).siblings().removeClass("current");
+        // console.log($(this).index());
+        const index = $(this).index();
+        var $li = $(".con>li").eq(index);
+        $li.siblings().removeClass("show");
+        $li.addClass("show");
+
+      });
+
+      $("button").eq(0).on("click", function () {
+        $(".box2").show(1000, () => {
+          alert('111')
+        });
+      });
+      $("button").eq(1).on("click", function () {
+        $(".box2").hide();
+      });
+      $("button").eq(2).on("click", function () {
+        $(".box2").toggle();
+      });
+    })
+  </script>
+</body>
+
+</html>
