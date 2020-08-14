@@ -1,5 +1,5 @@
 <template>
-  <div class="goods">
+  <div class="goods" @click="detail">
     <img :src="goodsItem.show.img" @load="imagload" />
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
@@ -24,6 +24,9 @@ export default {
       // console.log(111);
       // 通过事件总线发送事件
       this.$bus.$emit("itemImagLoad");
+    },
+    detail() {
+      this.$router.push("/detail/" + this.goodsItem.iid);
     },
   },
 };
