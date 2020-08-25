@@ -1,47 +1,52 @@
 <template>
   <el-dialog
     width="580px"
-    title="收货地址"
+    title="新增"
     :visible.sync="dialogStatusFlag"
     :append-to-body="true"
     @close="close"
+    @opened="getAddCategory"
   >
-    <el-form :model="form">
-      <el-form-item label="标题" :label-width="formLabelWidth">
-        <el-select v-model="form.region" placeholder="请选择活动区域">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
+    <el-form :model="form" ref="addForm">
+      <el-form-item label="类别" :label-width="formLabelWidth">
+        <el-select v-model="form.category" placeholder="请选择活动区域">
+          <el-option
+            v-for="item in categoryOptions.item"
+            :key="item.id"
+            :label="item.category_name"
+            :value="item.id"
+          ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="类型" :label-width="formLabelWidth">
-        <el-input v-model="form.name" autocomplete="off"></el-input>
+      <el-form-item label="标题" :label-width="formLabelWidth">
+        <el-input v-model="form.title" placeholder="请输入标题"></el-input>
       </el-form-item>
       <el-form-item label="概况" :label-width="formLabelWidth">
-        <el-input v-model="form.name" autocomplete="off"></el-input>
+        <el-input type="textarea" v-model="form.content" placeholder="请输入概况"></el-input>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button @click="dialogFormVisible = false">取 消</el-button>
-      <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+      <el-button @click="dialogStatusFlag = false">取 消</el-button>
+      <el-button type="primary" @click="submit" :loading="submitLoading">确 定</el-button>
     </div>
   </el-dialog>
 </template>
 
 <script>
+import { AddInfo } from "@/api/news";
 import { ref, reactive, watchEffect } from "@vue/composition-api";
 export default {
-  setup(props, { emit }) {
+  setup(props, { emit, root }) {
+    const submitLoading = ref(false);
     const dialogStatusFlag = ref(false);
     const formLabelWidth = ref("70px");
+    const categoryOptions = reactive({
+      item: [],
+    });
     const form = reactive({
-      name: "",
-      region: "",
-      date1: "",
-      date2: "",
-      delivery: false,
-      type: [],
-      resource: "",
-      desc: "",
+      category: "",
+      title: "",
+      content: "",
     });
     watchEffect(() => {
       dialogStatusFlag.value = props.flag;
@@ -49,17 +54,65 @@ export default {
     const close = () => {
       emit("close");
     };
+    const getAddCategory = () => {
+      categoryOptions.item = props.categoryList;
+    };
+    const resetForm = () => {
+      categoryId: "";
+      title: "";
+      imgUrl: "";
+      createDate: "";
+      status: "";
+      content: "";
+    };
+    const submit = () => {
+      let reqData = {
+        categoryId: form.category,
+        title: form.title,
+        imgUrl: "",
+        createDate: "",
+        status: "",
+        content: form.content,
+      };
+      submitLoading.value = true;
+      // console.log(reqData);
+      AddInfo(reqData)
+        .then((res) => {
+          let data = res.data;
+          console.log(data);
+          root.$message({
+            message: data.message,
+            type: "success",
+          });
+          submitLoading.value = false;
+          resetForm();
+          // console.log(res.data);
+        })
+        .catch((err) => {
+          submitLoading.value = false;
+        });
+    };
+
     return {
       dialogStatusFlag,
       formLabelWidth,
       form,
       close,
+      getAddCategory,
+      categoryOptions,
+      submit,
+      submitLoading,
+      resetForm,
     };
   },
   props: {
     flag: {
       type: Boolean,
       default: false,
+    },
+    categoryList: {
+      type: Array,
+      default: () => [],
     },
   },
   // watch: {
@@ -72,4 +125,5 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
+@import "../../../styles/main.scss";
 </style>
