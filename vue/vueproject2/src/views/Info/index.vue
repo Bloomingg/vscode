@@ -48,10 +48,10 @@
         </div>
       </el-col>
       <el-col :span="3">
-        <el-input placeholder="请输入内容" v-model="input" clearable style="width: 100%;"></el-input>
+        <el-input placeholder="请输入内容" v-model="search_keyWork" clearable style="width: 100%;"></el-input>
       </el-col>
       <el-col :span="2">
-        <el-button type="danger" style="width: 100%;">搜索</el-button>
+        <el-button type="danger" style="width: 100%;" @click="search">搜索</el-button>
       </el-col>
       <el-col :span="2" :offset="3">
         <el-button
@@ -65,16 +65,26 @@
 
     <div class="black-space-30"></div>
     <!-- 表格 -->
-    <el-table :data="tableData.item" border style="width: 100%">
+    <el-table
+      :data="tableData.item"
+      border
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column type="selection" width="45"></el-table-column>
       <el-table-column prop="title" label="标题" width="750"></el-table-column>
-      <el-table-column prop="categoryId" label="类型" width="130"></el-table-column>
-      <el-table-column prop="createDate" label="日期" width="237"></el-table-column>
+      <el-table-column prop="categoryId" label="类型" width="130" :formatter="toCategory"></el-table-column>
+      <el-table-column prop="createDate" label="日期" width="237" :formatter="formatter"></el-table-column>
       <el-table-column prop="user" label="管理员" width="115"></el-table-column>
       <el-table-column label="操作">
-        <template>
-          <el-button type="danger" size="mini" class="hiden-button" @click="del">删除</el-button>
-          <el-button type="success" size="mini" class="hiden-button" @click="dialogStatus=true">编辑</el-button>
+        <template slot-scope="scope">
+          <el-button type="danger" size="mini" class="hiden-button" @click="del(scope.row.id)">删除</el-button>
+          <el-button
+            type="success"
+            size="mini"
+            class="hiden-button"
+            @click="editInfo(scope.row.id)"
+          >编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -92,24 +102,34 @@
           background
           :page-sizes="[5,10,20,30]"
           layout="total,sizes,prev,pager,next,jumper"
-          :total="1000"
+          :total="total"
         ></el-pagination>
       </el-col>
     </el-row>
 
     <!-- 弹窗 -->
     <DialogInfo :flag="dialogStatus" @close="close" :categoryList="options.category" />
+    <DialogEditInfo
+      @getList="getList"
+      :flag="editInfoStatus"
+      @close="close"
+      :categoryList="options.category"
+      :id="infoId"
+    />
   </div>
 </template>
 
 <script>
-import { GetCategory, GetList } from "@/api/news";
+import { timestampToTime } from "@/utils/common";
+import { GetCategory, GetList, DeleteInfo } from "@/api/news";
 import DialogInfo from "./dialog/info";
+import DialogEditInfo from "./dialog/edit";
 import { reactive, ref, onMounted } from "@vue/composition-api";
 import { global } from "@/utils/globalV3.0";
 export default {
   components: {
     DialogInfo,
+    DialogEditInfo,
   },
   setup(props, { root }) {
     const tableData = reactive({
@@ -117,6 +137,14 @@ export default {
     });
     const options = reactive({
       category: [],
+    });
+    const time = reactive({
+      startTime: "",
+      endTime: "",
+    });
+    const page = reactive({
+      pageNumber: 1,
+      pageSize: 10,
     });
     const searchOptions = reactive([
       {
@@ -129,42 +157,110 @@ export default {
       },
     ]);
     const dialogStatus = ref(false);
+    const editInfoStatus = ref(false);
     const searchkey = ref("id");
     const categoryValue = ref("");
     const dataValue = ref("");
-    const input = ref("");
+    const search_keyWork = ref("");
     const { str, confirm } = global();
+    const total = ref(0);
+    const deleteInfoId = ref("");
+    const infoId = ref("");
 
-    const handleSizeChange = () => {};
-    const handleCurrentChange = () => {};
+    const handleSizeChange = (val) => {
+      page.pageSize = val;
+    };
+    const handleCurrentChange = (val) => {
+      page.pageNumber = val;
+      getList();
+    };
     const close = () => {
       dialogStatus.value = false;
+      editInfoStatus.value = false;
     };
-    const del = () => {
+    const handleSelectionChange = (val) => {
+      // console.log(val);
+      let id = val.map((item) => item.id);
+      deleteInfoId.value = id;
+    };
+    const search = () => {
+      let req = searchData();
+      console.log(req);
+      getList();
+    };
+    const searchData = () => {
+      let req = {
+        pageNumber: page.pageNumber,
+        pageSize: page.pageSize,
+      };
+      if (categoryValue.value) {
+        req.categoryId = categoryValue.value;
+      }
+      if (dataValue.value.length > 0) {
+        req.startTime = dataValue.value[0];
+        req.endTime = dataValue.value[1];
+      }
+      if (search_keyWork.value) {
+        req[searchkey.value] = search_keyWork.value;
+      }
+      return req;
+    };
+    const del = (id) => {
+      console.log(id);
+      deleteInfoId.value = [id];
       confirm({
-        content: "确认删除当前信息，删除后无法恢复！",
+        content: "确认删除当前信息，确认后将无法恢复！！",
+        tip: "警告",
+        fn: confirmDelete,
       });
+    };
+    const editInfo = (id) => {
+      // console.log(id);
+      infoId.value = id;
+      editInfoStatus.value = true;
     };
     const delAll = () => {
+      if (!deleteInfoId.value || deleteInfoId.value.length == 0) {
+        root.$message({
+          message: "请选择要删除的数据！！",
+          type: "error",
+        });
+        return false;
+      }
       confirm({
-        content: "确认当前选中信息，删除后无法恢复！",
+        content: "确认删除选择的数据，确认后将无法恢复！",
+        tip: "警告",
+        fn: confirmDelete,
       });
     };
+    const confirmDelete = (value) => {
+      DeleteInfo({ id: deleteInfoId.value }).then((response) => {
+        deleteInfoId.value = "";
+        getList();
+      });
+    };
+    const formatter = (row) => {
+      return timestampToTime(row.createDate);
+    };
+    const toCategory = (row) => {
+      // 调用一个函数，返回一个新的值，替换原始值
+      let categoryId = row.categoryId;
+      let categoryData = options.category.filter(
+        (item) => item.id == categoryId
+      )[0];
+      if (!categoryData) {
+        return false;
+      }
+      return categoryData.category_name;
+    };
     const getList = () => {
-      let req = {
-        categoryId: "",
-        startTiem: "",
-        endTime: "",
-        title: "",
-        id: "",
-        pageNumber: 1,
-        pageSize: 10,
-      };
+      let req = searchData();
       GetList(req)
         .then((res) => {
           let data = res.data.data;
           console.log(res);
           tableData.item = data.data;
+          total.value = data.total;
         })
         .catch((err) => {});
     };
@@ -189,7 +285,7 @@ export default {
       dataValue,
       searchkey,
       tableData,
-      input,
+      search_keyWork,
       handleSizeChange,
       handleCurrentChange,
       dialogStatus,
@@ -198,6 +294,14 @@ export default {
       delAll,
       getCategory,
       getList,
+      total,
+      formatter,
+      toCategory,
+      handleSelectionChange,
+      search,
+      editInfoStatus,
+      editInfo,
+      infoId,
     };
   },
 };

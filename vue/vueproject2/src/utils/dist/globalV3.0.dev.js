@@ -13,21 +13,16 @@ function global() {
   var str = (0, _compositionApi.ref)('');
 
   var confirm = function confirm(params) {
-    _elementUi.MessageBox.confirm(params.content, "提示", {
+    _elementUi.MessageBox.confirm(params.content, params.tip || "提示", {
       confirmButtonText: "确定",
       cancelButtonText: "取消",
-      type: "warning",
+      type: params.type || "warning",
       center: true
     }).then(function () {
-      root.$message({
-        type: "success",
-        message: "删除成功!"
-      });
+      str.value = params.id || '';
+      params.fn && params.fn(params.id || '');
     })["catch"](function () {
-      root.$message({
-        type: "info",
-        message: "已取消删除"
-      });
+      params.catchFn && params.catchFn();
     });
   };
 
