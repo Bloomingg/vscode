@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    const obj = {
+      id: 1,
+      age: 18,
+      message: {
+        name: 'testCopy'
+      },
+      color: ['pink', 'blue']
+    }
+    const o = {}
+    const shallow = {}
+
+    // 浅拷贝   
+    // 浅拷贝只是拷贝一层，更深层次对象级别的只拷贝引用（地址）
+    // 如 obj中的message对象 即在拷贝之后对数据进行修改 会影响原对象内容
+
+    // 方法一
+    // for (let k in obj) {
+    //   shallow[k] = obj[k]
+    // }
+
+    // 方法二
+    Object.assign(shallow, obj)
+
+
+    console.log('----------------浅拷贝-------------');
+    shallow.message.name = 'shallowCopy'
+    console.log(shallow);
+    console.log(obj);
+
+
+    // 深拷贝
+    // 深拷贝是拷贝多层，每一级别的数据都会拷贝
+    // 且在拷贝之后对数据进行修改 不会影响原对象内容
+    function deepCopy(newObj, oldObj) {
+      for (let k in oldObj) {
+        // 判断属性值属于哪种类型
+        let item = oldObj[k]
+        // 数组判断必须在对象前 因为数组也是对象类型
+        if (item instanceof Array) {
+          newObj[k] = []
+          deepCopy(newObj[k], item)
+        } else if (item instanceof Object) {
+          newObj[k] = {}
+          deepCopy(newObj[k], item)
+        } else {
+          newObj[k] = item
+        }
+      }
+    }
+    console.log('----------------深拷贝-------------');
+    deepCopy(o, obj)
+    o.message.name = 'deepCopy'
+    console.log(o);
+    console.log(obj);
+  </script>
+</body>
+
+</html>

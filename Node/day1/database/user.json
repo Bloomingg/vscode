@@ -1,0 +1,61 @@
+
+  {
+    "name": "张三",
+    "age": 18,
+    "email":"1293499952@qq.com",
+    "password":"19980930qq",
+    "hobbies": [
+      "篮球",
+      "足球"
+    ]
+  }
+  {
+    "name": "李四",
+    "age": 28,
+    "email":"1293499952@aa.com",
+    "password":"19980930aa",
+    "hobbies": [
+      "划水",
+      "足球"
+    ]
+  }
+  {
+    "name": "王五",
+    "age": 20,
+    "email":"1293499952@bb.com",
+    "password":"19980930bb",
+    "hobbies": [
+      "篮球",
+      "游泳"
+    ]
+  }
+  {
+    "name": "张六",
+    "age": 18,
+    "email":"1293499952@cc.com",
+    "password":"19980930cc",
+    "hobbies": [
+      "篮球",
+      "足球"
+    ]
+  }
+  {
+    "name": "张七",
+    "age": 18,
+    "email":"1293499952@dd.com",
+    "password":"19980930dd",
+    "hobbies": [
+      "篮球",
+      "足球"
+    ]
+  }
+  {
+    "name": "张八",
+    "age": 18,
+    "email":"1293499952@ee.com",
+    "password":"19980930ee",
+    "hobbies": [
+      "篮球",
+      "足球"
+    ]
+  }

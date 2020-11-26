@@ -85,6 +85,7 @@
             class="hiden-button"
             @click="editInfo(scope.row.id)"
           >编辑</el-button>
+            <el-button type="success" size="mini" @click="detailed(scope.row)" v-btnPerm="'info:detailed'" class="hiden-button">编辑详情</el-button>
         </template>
       </el-table-column>
     </el-table>
