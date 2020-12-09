@@ -1,0 +1,17 @@
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    
+    (async ()=>{
+      console.log(111);
+      axios.defaults.baseURL = 'http://localhost:4000'
+      axios.defaults.withCredentials = true
+      const res = await axios.get("/proxy",{
+        headers:{
+        'X-Token':'assdsad'
+      }
+      }
+      )
+      console.log('data',res.data);
+      document.writeln(`res:${JSON.stringify(res.data)}`)
+    })()
+  </script>

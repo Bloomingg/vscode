@@ -1,0 +1,19 @@
+{
+  "name": "koa02",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.13.0",
+    "koa-art-template": "^1.1.1",
+    "koa-router": "^10.0.0",
+    "mongodb": "^3.6.3",
+    "path": "^0.12.7"
+  }
+}
