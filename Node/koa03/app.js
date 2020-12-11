@@ -21,7 +21,8 @@ router.get('/', (ctx) => {
 })
 
 router.get('/proxy', (ctx) => {
-  ctx.set('Access-Control-Allow-Origin', 'http://localhost:3000')
+  ctx.set('Access-Control-Allow-Origin', 'http://127.0.0.1:5500')
+  // ctx.set('Access-Control-Allow-Origin', 'http://localhost:3000')
   ctx.set('Access-Control-Allow-Credentials', 'true')
   ctx.set('Set-Cookie', 'key=saido')
   ctx.body = [{
@@ -32,7 +33,8 @@ router.get('/proxy', (ctx) => {
 
 router.options('/proxy', (ctx) => {
   ctx.status = 204
-  ctx.set('Access-Control-Allow-Origin', 'http://localhost:3000')
+  ctx.set('Access-Control-Allow-Origin', 'http://127.0.0.1:5500/')
+  // ctx.set('Access-Control-Allow-Origin', 'http://localhost:3000')
   ctx.set('Access-Control-Allow-Headers', 'X-Token,Content-Type')
   ctx.set('Access-Control-Allow-Methods', '*')
   ctx.set('Access-Control-Allow-Credentials', 'true')
