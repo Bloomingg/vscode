@@ -12,9 +12,14 @@ Vue.use(EleForm)
 
 Vue.config.productionTip = false
 
-Vue.prototype.$http = axios.create({
-  baseURL: 'http://localhost:3000'
-})
+const http = axios.create({
+  baseURL: "http://localhost:3000"
+});
+Vue.prototype.$http = http;//vue的axios
+window.axios = axios
+// window.axios.create({
+//   baseURL: "http://localhost:3000"
+// })
 
 new Vue({
   router,

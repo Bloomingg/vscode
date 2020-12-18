@@ -3,14 +3,14 @@
     <avue-crud
       :data="data.formData"
       :option="data.formOption"
+      :page="data.page"
       @row-save="rowSave"
       @row-update="rowUpdate"
       @row-del="rowDel"
       @refresh-change="refreshChange"
       @search-change="searchChange"
       @search-reset="searchChange"
-      @rowEdit="rowEdit2"
-      @rowUpdate="rowUpdate2"
+      @on-load="onLoad"
     >
     </avue-crud>
   </div>
@@ -25,11 +25,28 @@ export default class ResourceCrud extends Vue {
   data = {
     formData: [],
     formOption: {},
+    page: {
+      total: 0,
+      currentPage: 1,
+      pageSize: 2,
+      pageSizes: [2, 5, 10],
+    },
+    query: {
+      limit: 2,
+      page: 1,
+      where: {},
+    },
   };
 
   async fetch() {
-    const res = await this.$http.get(`${this.resource}`);
+    const res = await this.$http.get(`${this.resource}`, {
+      params: {
+        query: this.data.query,
+      },
+    });
     this.data.formData = res.data.data;
+    this.data.page.total = res.data.total;
+    this.data.page.currentPage = res.data.page;
   }
 
   async fetchOption() {
@@ -67,20 +84,38 @@ export default class ResourceCrud extends Vue {
     this.$message.success("刷新成功！");
   }
 
-  async rowEdit2(row, index) {
-    console.log(row);
-    console.log(1111);
+  async onLoad({ currentPage, pageSize }) {
+    this.data.query.limit = pageSize;
+    this.data.query.page = currentPage;
+    this.fetch();
   }
 
-  rowUpdate2() {
-    console.log(111);
-  }
+  // async currentChange(page) {
+  //   // console.log(page);
+  //   this.data.query.limit = this.data.page.pageSize;
+  //   this.data.query.page = page;
+  //   this.fetch();
+  // }
+
+  // async sizeChange(size) {
+  //   // console.log(size);
+  //   this.data.page.pageSize = size;
+  // }
 
   async searchChange(params, done) {
     // console.log(params);
     // if (done) done();
     // this.params = params;
-    // this.page.currentPage = 1;
+    for (let k in params) {
+      const field = this.data.formOption.column.find((v) => v.prop === k);
+      if (field.regex) {
+        params[k] = { $regex: params[k] };
+      }
+    }
+    this.data.query.page = 1;
+    this.data.query.where = params;
+    this.fetch();
+    done();
     // this.getList();
     // this.$message.success('搜索成功')
   }
