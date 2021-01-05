@@ -1,8 +1,8 @@
 import { Controller, Get } from '@nestjs/common';
 
-@Controller('admin/login')
+@Controller('admin')
 export class LoginController {
-  @Get('')
+  @Get('login')
   login() {
     return { "success": true }
   }
